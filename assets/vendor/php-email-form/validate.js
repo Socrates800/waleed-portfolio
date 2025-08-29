@@ -1,7 +1,6 @@
 /**
-* PHP Email Form Validation - v3.11
-* URL: https://bootstrapmade.com/php-email-form/
-* Author: BootstrapMade.com
+* Enhanced Contact Form Validation for Formspree
+* Compatible with Netlify deployment
 */
 (function () {
   "use strict";
@@ -15,64 +14,68 @@
       let thisForm = this;
 
       let action = thisForm.getAttribute('action');
-      let recaptcha = thisForm.getAttribute('data-recaptcha-site-key');
       
       if( ! action ) {
         displayError(thisForm, 'The form action property is not set!');
         return;
       }
+
+      // Show loading state
       thisForm.querySelector('.loading').classList.add('d-block');
       thisForm.querySelector('.error-message').classList.remove('d-block', 'show');
       thisForm.querySelector('.sent-message').classList.remove('d-block', 'show');
 
       let formData = new FormData( thisForm );
 
-      if ( recaptcha ) {
-        if(typeof grecaptcha !== "undefined" ) {
-          grecaptcha.ready(function() {
-            try {
-              grecaptcha.execute(recaptcha, {action: 'php_email_form_submit'})
-              .then(token => {
-                formData.set('recaptcha-response', token);
-                php_email_form_submit(thisForm, action, formData);
-              })
-            } catch(error) {
-              displayError(thisForm, error);
-            }
-          });
-        } else {
-          displayError(thisForm, 'The reCaptcha javascript API url is not loaded!')
-        }
-      } else {
-        php_email_form_submit(thisForm, action, formData);
-      }
+      // Submit to Formspree
+      submitToFormspree(thisForm, action, formData);
     });
   });
 
-  function php_email_form_submit(thisForm, action, formData) {
+  function submitToFormspree(thisForm, action, formData) {
     fetch(action, {
       method: 'POST',
       body: formData,
-      headers: {'X-Requested-With': 'XMLHttpRequest'}
+      headers: {
+        'Accept': 'application/json'
+      }
     })
     .then(response => {
       if( response.ok ) {
         return response.json();
       } else {
-        throw new Error(`${response.status} ${response.statusText} ${response.url}`); 
+        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
       }
     })
     .then(data => {
       thisForm.querySelector('.loading').classList.remove('d-block');
-      if (data.success) {
-        displaySuccess(thisForm, data.message || 'Your message has been sent. Thank you!');
+      
+      if (data.ok) {
+        // Formspree success response
+        displaySuccess(thisForm, 'Your message has been sent successfully! Thank you for reaching out.');
         thisForm.reset(); 
       } else {
-        throw new Error(data.error || 'Form submission failed and no error message returned from: ' + action); 
+        // Formspree error response
+        throw new Error(data.error || 'Form submission failed. Please try again.');
       }
     })
     .catch((error) => {
-      displayError(thisForm, error);
+      thisForm.querySelector('.loading').classList.remove('d-block');
+      
+      // Handle different types of errors
+      let errorMessage = 'Something went wrong. Please try again later.';
+      
+      if (error.message.includes('HTTP 429')) {
+        errorMessage = 'Too many requests. Please wait a moment and try again.';
+      } else if (error.message.includes('HTTP 400')) {
+        errorMessage = 'Please check your form inputs and try again.';
+      } else if (error.message.includes('HTTP 500')) {
+        errorMessage = 'Server error. Please try again later.';
+      } else if (error.message.includes('Failed to fetch')) {
+        errorMessage = 'Network error. Please check your connection and try again.';
+      }
+      
+      displayError(thisForm, errorMessage);
     });
   }
 

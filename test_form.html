@@ -21,7 +21,7 @@
     <h1>Test Contact Form</h1>
     <p>This is a test page to verify your contact form is working.</p>
     
-    <form action="forms/contact.php" method="post" class="php-email-form">
+    <form action="https://formspree.io/f/xayzqkqr" method="POST" class="php-email-form">
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
@@ -42,7 +42,7 @@
             <textarea id="message" name="message" rows="4" required></textarea>
         </div>
         
-        <button type="submit">Send Message</button>
+        <button type="submit" class="btn">Send Message</button>
         
         <div class="loading">Loading...</div>
         <div class="error-message"></div>
