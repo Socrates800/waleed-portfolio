@@ -21,7 +21,14 @@
     <h1>Test Contact Form</h1>
     <p>This is a test page to verify your contact form is working.</p>
     
-    <form method="POST" class="php-email-form" netlify>
+    <form method="POST" class="php-email-form" netlify name="test-contact-form">
+        <!-- Netlify form handling -->
+        <input type="hidden" name="form-name" value="test-contact-form" />
+        <!-- Honeypot field to prevent spam -->
+        <div style="display: none;">
+            <input name="bot-field" />
+        </div>
+        
         <div class="form-group">
             <label for="name">Name:</label>
             <input type="text" id="name" name="name" required>
@@ -44,7 +51,7 @@
         
         <button type="submit" class="btn">Send Message</button>
         
-        <div class="loading">Loading...</div>
+        <div class="loading">Loading</div>
         <div class="success-message">Your message has been sent. Thank you!</div>
     </form>
 

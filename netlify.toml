@@ -23,4 +23,24 @@
 [[headers]]
   for = "/forms/*"
   [headers.values]
-    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;" 
+    Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data: https:;"
+
+# Form processing configuration
+[forms]
+  [forms.contact-form]
+    name = "Contact Form"
+    honeypot = "bot-field"
+    [forms.contact-form.fields]
+      name = { required = true }
+      email = { required = true, type = "email" }
+      subject = { required = true }
+      message = { required = true }
+  
+  [forms.test-contact-form]
+    name = "Test Contact Form"
+    honeypot = "bot-field"
+    [forms.test-contact-form.fields]
+      name = { required = true }
+      email = { required = true, type = "email" }
+      subject = { required = true }
+      message = { required = true } 

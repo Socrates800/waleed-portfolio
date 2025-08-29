@@ -1096,7 +1096,14 @@
               </p>
 
               <form method="POST" class="php-email-form" data-aos="fade-up"
-                data-aos-delay="200" netlify>
+                data-aos-delay="200" netlify name="contact-form">
+                <!-- Netlify form handling -->
+                <input type="hidden" name="form-name" value="contact-form" />
+                <!-- Honeypot field to prevent spam -->
+                <div class="d-none">
+                  <input name="bot-field" />
+                </div>
+                
                 <div class="row gy-4">
 
                   <div class="col-md-6">
