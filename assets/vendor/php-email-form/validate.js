@@ -15,8 +15,9 @@
 
       // Show loading state
       thisForm.querySelector('.loading').classList.add('d-block');
-      thisForm.querySelector('.error-message').classList.remove('d-block', 'show');
-      thisForm.querySelector('.sent-message').classList.remove('d-block', 'show');
+      thisForm.querySelector('.error-message')?.classList.remove('d-block', 'show');
+      thisForm.querySelector('.sent-message')?.classList.remove('d-block', 'show');
+      thisForm.querySelector('.success-message')?.classList.remove('d-block', 'show');
 
       let formData = new FormData( thisForm );
 
@@ -38,48 +39,63 @@
       thisForm.reset();
       
       // Also submit the form normally for Netlify to process
-      thisForm.submit();
+      // This will send the data to Netlify but won't redirect
+      const form = thisForm;
+      const originalAction = form.action;
+      form.action = ''; // Remove action to prevent redirect
+      
+      // Submit the form
+      form.submit();
+      
+      // Restore original action
+      form.action = originalAction;
     }, 1500);
   }
 
   function displaySuccess(thisForm, message) {
-    const successElement = thisForm.querySelector('.sent-message');
-    successElement.innerHTML = message;
-    successElement.classList.add('d-block');
+    // Try to find success message element (could be sent-message or success-message)
+    const successElement = thisForm.querySelector('.sent-message') || thisForm.querySelector('.success-message');
     
-    // Trigger reflow for smooth animation
-    successElement.offsetHeight;
-    
-    // Add show class for animation
-    successElement.classList.add('show');
-    
-    // Auto-dismiss after 5 seconds
-    setTimeout(() => {
-      successElement.classList.add('hiding');
+    if (successElement) {
+      successElement.innerHTML = message;
+      successElement.classList.add('d-block');
+      
+      // Trigger reflow for smooth animation
+      successElement.offsetHeight;
+      
+      // Add show class for animation
+      successElement.classList.add('show');
+      
+      // Auto-dismiss after 5 seconds
       setTimeout(() => {
-        successElement.classList.remove('d-block', 'show', 'hiding');
-      }, 500);
-    }, 5000);
+        successElement.classList.add('hiding');
+        setTimeout(() => {
+          successElement.classList.remove('d-block', 'show', 'hiding');
+        }, 500);
+      }, 5000);
+    }
   }
 
   function displayError(thisForm, error) {
     const errorElement = thisForm.querySelector('.error-message');
-    errorElement.innerHTML = error;
-    errorElement.classList.add('d-block');
-    
-    // Trigger reflow for smooth animation
-    errorElement.offsetHeight;
-    
-    // Add show class for animation
-    errorElement.classList.add('show');
-    
-    // Auto-dismiss after 8 seconds (longer for errors)
-    setTimeout(() => {
-      errorElement.classList.add('hiding');
+    if (errorElement) {
+      errorElement.innerHTML = error;
+      errorElement.classList.add('d-block');
+      
+      // Trigger reflow for smooth animation
+      errorElement.offsetHeight;
+      
+      // Add show class for animation
+      errorElement.classList.add('show');
+      
+      // Auto-dismiss after 8 seconds (longer for errors)
       setTimeout(() => {
-        errorElement.classList.remove('d-block', 'show', 'hiding');
-      }, 500);
-    }, 8000);
+        errorElement.classList.add('hiding');
+        setTimeout(() => {
+          errorElement.classList.remove('d-block', 'show', 'hiding');
+        }, 500);
+      }, 8000);
+    }
   }
 
 })();
