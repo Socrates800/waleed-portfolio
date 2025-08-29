@@ -246,8 +246,12 @@
   function initTawkChat() {
     // Wait for Tawk.to to load
     if (typeof Tawk_API !== 'undefined') {
+      console.log('Tawk.to API loaded successfully');
+      
       // Customize chat widget
       Tawk_API.onLoad = function() {
+        console.log('Tawk.to widget loaded');
+        
         // Set custom chat title
         Tawk_API.setAttributes({
           'name': 'Portfolio Visitor',
@@ -280,11 +284,15 @@
       };
     } else {
       // Retry if Tawk.to hasn't loaded yet
-      setTimeout(initTawkChat, 1000);
+      console.log('Tawk.to API not loaded yet, retrying...');
+      setTimeout(initTawkChat, 2000);
     }
   }
 
   // Initialize chat when page loads
   window.addEventListener('load', initTawkChat);
+  
+  // Also try to initialize after a delay in case it loads later
+  setTimeout(initTawkChat, 3000);
 
 })();
