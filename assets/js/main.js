@@ -240,4 +240,51 @@
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
 
+  /**
+   * Tawk.to Live Chat Widget Enhancement
+   */
+  function initTawkChat() {
+    // Wait for Tawk.to to load
+    if (typeof Tawk_API !== 'undefined') {
+      // Customize chat widget
+      Tawk_API.onLoad = function() {
+        // Set custom chat title
+        Tawk_API.setAttributes({
+          'name': 'Portfolio Visitor',
+          'email': '',
+          'role': 'visitor'
+        });
+        
+        // Custom welcome message
+        Tawk_API.maximize();
+        Tawk_API.sendMessage('👋 Hi! I\'m Waleed, a Full Stack Developer. How can I help you today?');
+        Tawk_API.minimize();
+      };
+
+      // Handle chat events
+      Tawk_API.onStatusChange = function(status) {
+        if (status === 'online') {
+          console.log('Chat is now online');
+        }
+      };
+
+      // Custom chat button styling
+      Tawk_API.onChatMaximized = function() {
+        // Add custom class when chat is opened
+        document.body.classList.add('chat-open');
+      };
+
+      Tawk_API.onChatMinimized = function() {
+        // Remove custom class when chat is closed
+        document.body.classList.remove('chat-open');
+      };
+    } else {
+      // Retry if Tawk.to hasn't loaded yet
+      setTimeout(initTawkChat, 1000);
+    }
+  }
+
+  // Initialize chat when page loads
+  window.addEventListener('load', initTawkChat);
+
 })();

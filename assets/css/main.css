@@ -3352,3 +3352,86 @@ section,
 .starter-section {
   /* Add your styles here */
 }
+
+/* Tawk.to Live Chat Widget Customization */
+#tawkto-container {
+  z-index: 9999 !important;
+}
+
+/* Custom chat widget styling */
+.tawk-chat-widget {
+  border-radius: 15px !important;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* Chat button styling */
+.tawk-chat-button {
+  background: var(--accent-color) !important;
+  border-radius: 50% !important;
+  box-shadow: 0 4px 15px rgba(6, 92, 194, 0.3) !important;
+  transition: all 0.3s ease !important;
+}
+
+.tawk-chat-button:hover {
+  transform: scale(1.1) !important;
+  box-shadow: 0 6px 20px rgba(6, 92, 194, 0.4) !important;
+}
+
+/* Chat window styling */
+.tawk-chat-window {
+  border-radius: 15px !important;
+  border: none !important;
+}
+
+/* Chat header styling */
+.tawk-chat-header {
+  background: var(--accent-color) !important;
+  color: white !important;
+  border-radius: 15px 15px 0 0 !important;
+}
+
+/* Chat input styling */
+.tawk-chat-input {
+  border-radius: 20px !important;
+  border: 2px solid var(--accent-color) !important;
+}
+
+/* Chat messages styling */
+.tawk-chat-message {
+  border-radius: 15px !important;
+}
+
+/* Responsive chat widget */
+@media (max-width: 768px) {
+  .tawk-chat-widget {
+    max-width: 90vw !important;
+    max-height: 80vh !important;
+  }
+}
+
+/* Animation for chat button */
+@keyframes chatPulse {
+  0% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(6, 92, 194, 0.3);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 6px 20px rgba(6, 92, 194, 0.4);
+  }
+  100% {
+    transform: scale(1);
+    box-shadow: 0 4px 15px rgba(6, 92, 194, 0.3);
+  }
+}
+
+.tawk-chat-button {
+  animation: chatPulse 2s infinite;
+}
+
+/* Hide chat widget on very small screens */
+@media (max-width: 480px) {
+  .tawk-chat-widget {
+    display: none !important;
+  }
+}
