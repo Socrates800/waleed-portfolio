@@ -78,6 +78,7 @@
           <li><a href="#resume">Resume</a></li>
           <li><a href="#portfolio">Portfolio</a></li>
           <li><a href="#services">Services</a></li>
+          <li><a href="#api-arcade">🎮 API Arcade</a></li>
           <!-- <li class="dropdown"><a href="#"><span>Dropdown</span> <i class="bi bi-chevron-down toggle-dropdown"></i></a>
             <ul>
               <li><a href="#">Dropdown 1</a></li>
@@ -797,6 +798,188 @@
 
     </section><!-- /Services Section -->
 
+    <!-- API Arcade Section -->
+    <section id="api-arcade" class="api-arcade section">
+      <!-- Section Title -->
+      <div class="container section-title" data-aos="fade-up">
+        <h2>🎮 API Arcade</h2>
+        <p>Level up your API skills! Test endpoints, earn badges, and become an API wizard.</p>
+      </div>
+
+      <div class="container" data-aos="fade-up" data-aos-delay="100">
+        <!-- Player Stats -->
+        <div class="player-stats" data-aos="fade-up" data-aos-delay="100">
+          <div class="row g-3">
+            <div class="col-md-3">
+              <div class="stat-card">
+                <div class="stat-icon">🏆</div>
+                <div class="stat-value" id="player-level">1</div>
+                <div class="stat-label">Level</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="stat-card">
+                <div class="stat-icon">⚡</div>
+                <div class="stat-value" id="player-xp">0</div>
+                <div class="stat-label">XP</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="stat-card">
+                <div class="stat-icon">🎯</div>
+                <div class="stat-value" id="successful-requests">0</div>
+                <div class="stat-label">Successful</div>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="stat-card">
+                <div class="stat-icon">🔥</div>
+                <div class="stat-value" id="streak">0</div>
+                <div class="stat-label">Streak</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Achievement Badges -->
+        <div class="achievements" data-aos="fade-up" data-aos-delay="200">
+          <h4>🏅 Achievements</h4>
+          <div class="badge-container">
+            <div class="achievement-badge locked" id="first-success">
+              <span class="badge-icon">🌟</span>
+              <span class="badge-name">First Success</span>
+            </div>
+            <div class="achievement-badge locked" id="speed-demon">
+              <span class="badge-icon">⚡</span>
+              <span class="badge-name">Speed Demon</span>
+            </div>
+            <div class="achievement-badge locked" id="error-hunter">
+              <span class="badge-icon">🐛</span>
+              <span class="badge-name">Error Hunter</span>
+            </div>
+            <div class="achievement-badge locked" id="json-master">
+              <span class="badge-icon">📄</span>
+              <span class="badge-name">JSON Master</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- API Playground -->
+        <div class="row g-4">
+          <!-- Request Panel -->
+          <div class="col-lg-6" data-aos="fade-right" data-aos-delay="300">
+            <div class="arcade-panel request-panel">
+              <div class="panel-header">
+                <h4>🚀 Mission Control</h4>
+                <div class="panel-status" id="request-status">Ready for Launch</div>
+              </div>
+              
+              <!-- Quick Challenges -->
+              <div class="quick-challenges">
+                <h5>🎯 Quick Challenges</h5>
+                <div class="challenge-buttons">
+                  <button class="challenge-btn" data-url="https://httpbin.org/json" data-method="GET">
+                    📊 JSON Demo
+                  </button>
+                  <button class="challenge-btn" data-url="https://httpbin.org/uuid" data-method="GET">
+                    🆔 Random UUID
+                  </button>
+                  <button class="challenge-btn" data-url="https://httpbin.org/headers" data-method="GET">
+                    📋 Request Headers
+                  </button>
+                  <button class="challenge-btn" data-url="https://httpbin.org/ip" data-method="GET">
+                    🌐 Your IP
+                  </button>
+                </div>
+              </div>
+
+              <!-- Custom Request Builder -->
+              <!-- CORS Tips -->
+              <div class="cors-tips">
+                <h6>💡 Pro Tip</h6>
+                <p>For testing, use CORS-friendly APIs like <code>httpbin.org</code>, <code>jsonplaceholder.typicode.com</code>, or <code>api.github.com</code></p>
+              </div>
+              <div class="request-builder">
+                <h5>⚙️ Custom Request</h5>
+                
+                <div class="form-group">
+                  <label>HTTP Method</label>
+                  <select id="http-method" class="form-control">
+                    <option value="GET">GET</option>
+                    <option value="POST">POST</option>
+                    <option value="PUT">PUT</option>
+                    <option value="DELETE">DELETE</option>
+                  </select>
+                </div>
+
+                <div class="form-group">
+                  <label>API Endpoint URL</label>
+                  <input type="url" id="api-url" class="form-control" placeholder="https://httpbin.org/get">
+                </div>
+
+                <div class="form-group">
+                  <label>Headers (Optional)</label>
+                  <textarea id="request-headers" class="form-control" rows="3" placeholder='{"Content-Type": "application/json"}'></textarea>
+                </div>
+
+                <div class="form-group" id="request-body-group" style="display: none;">
+                  <label>Request Body (JSON)</label>
+                  <textarea id="request-body" class="form-control" rows="4" placeholder='{"key": "value"}'></textarea>
+                </div>
+
+                <button id="launch-request" class="btn btn-primary btn-lg w-100">
+                  🚀 Launch Request
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Response Panel -->
+          <div class="col-lg-6" data-aos="fade-left" data-aos-delay="400">
+            <div class="arcade-panel response-panel">
+              <div class="panel-header">
+                <h4>📡 Mission Results</h4>
+                <div class="response-meta">
+                  <span id="response-status" class="status-badge">-</span>
+                  <span id="response-time" class="time-badge">-</span>
+                </div>
+              </div>
+
+              <div class="response-content">
+                <div id="response-placeholder" class="response-placeholder">
+                  <div class="placeholder-icon">🎯</div>
+                  <p>Launch a request to see the response!</p>
+                  <p class="small">Try one of the quick challenges or build your own custom request.</p>
+                </div>
+                
+                <div id="response-data" class="response-data" style="display: none;">
+                  <div class="response-headers">
+                    <h6>Response Headers</h6>
+                    <pre id="response-headers-content"></pre>
+                  </div>
+                  <div class="response-body">
+                    <h6>Response Body</h6>
+                    <pre id="response-body-content"></pre>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Level Progress -->
+        <div class="level-progress" data-aos="fade-up" data-aos-delay="500">
+          <div class="progress-header">
+            <span>Progress to Level <span id="next-level">2</span></span>
+            <span><span id="current-xp">0</span> / <span id="required-xp">100</span> XP</span>
+          </div>
+          <div class="progress">
+            <div class="progress-bar" id="xp-progress" style="width: 0%"></div>
+          </div>
+        </div>
+      </div>
+    </section><!-- /API Arcade Section -->
+
     <!-- Portfolio Section -->
     <section id="portfolio" class="portfolio section">
 
@@ -1186,6 +1369,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/api-arcade.js"></script>
 
   <!-- Tawk.to Live Chat Widget -->
   <!--Start of Tawk.to Script-->
